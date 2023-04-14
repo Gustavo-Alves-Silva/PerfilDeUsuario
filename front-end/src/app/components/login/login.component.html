@@ -1,0 +1,95 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown" id="main-container">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <h1>Acesse sua conta</h1>
+    </div>
+
+    <form (ngSubmit)="validarUsuarios(key.value,login.value)">
+      <!-- <input type="text" id="login" class="" name="login" class="login" placeholder="login" [(ngModel)]="login">
+      <input type="text" id="password" class="fadeIn third" name="login" class="login" placeholder="password" [(ngModel)]="senha"> -->
+      <input type="text" #login="ngModel" ngModel
+      name="login" id="login" class="fadeIn second" placeholder="NOME" required>
+
+      <input type="password"  #key="ngModel" ngModel
+      name="key" id="password" class="fadeIn third" placeholder="SENHA" required>
+
+      <input type="submit"  #key="ngModel" ngModel class="fadeIn fourth" required>
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" (click)="onOpenModal(null, 'add')">Criar Conta</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="addUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="addUsuarioModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addUsuarioModalLabel">Add Usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddUsuario(addForm)">
+          <div class="form-group">
+             <label for="name">Nome</label>
+             <input type="text" ngModel name="nome" class="form-control" id="nome" placeholder="ex: Gustavo Alves" required>
+          </div>
+          <div class="form-group">
+             <label for="idade">Idade</label>
+             <input type="number" ngModel name="idade" class="form-control" id="idade" placeholder="ex: 18" required>
+          </div>
+          <div class="form-group">
+             <label for="estado">Estado</label>
+             <input type="text" ngModel name="estado" class="form-control" id="estado" placeholder="ex: Bahia" required>
+          </div>
+          <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" ngModel name="cidade" class="form-control" id="cidade" placeholder="ex: Recife" required>
+         </div>
+         <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input type="text" ngModel name="bairro" class="form-control" id="bairro" placeholder="ex: Centro" required>
+         </div> 
+          <div class="form-group">
+              <label for="locradouro">Locradouro</label>
+              <input type="text" ngModel name="locradouro" class="form-control" id="locradouro" placeholder="ex: R. 7 de maio" required>
+           </div>            
+           <div class="form-group">
+              <label for="numero">Número</label>
+              <input type="number" ngModel name="numero" class="form-control" id="numero" placeholder="ex: 157" required>
+           </div>
+           <div class="form-group">
+              <label for="biografia">Biografia</label>
+              <input type="text" ngModel name="biografia" class="form-control" id="biografia" placeholder="ex: Eu sou João e moro em João pessoa..." required>
+           </div>
+           <div class="form-group">
+              <label for="senha">Senha</label>
+              <input type="text" ngModel name="senha" class="form-control" id="senha" placeholder="ex: 1234abcd" required>
+           </div>
+           <div class="form-group">
+             <label for="imageUrl">Image URL</label>
+             <input type="text" ngModel name="imageUrl" class="form-control" id="imageUrl" placeholder="ex: https://www.google.com/imgres?imgurl=312312" required>
+          </div>
+          <div class="modal-footer">
+             <button type="button" id="add-usuario-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+</div>

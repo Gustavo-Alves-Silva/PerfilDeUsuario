@@ -31,6 +31,12 @@ public class Usuario implements Serializable {
 
     private String nome;
 
+    private String senha;
+
+    private String cidade;
+
+    private String bairro;
+
     private int idade;
 
     private String estado;

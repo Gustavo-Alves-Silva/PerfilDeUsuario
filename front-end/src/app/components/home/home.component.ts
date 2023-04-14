@@ -1,29 +1,25 @@
 import { HttpErrorResponse  } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-import { Usuario } from './usuario';
-import { UsuarioService } from './usuario.service';
-
+import { Usuario } from 'src/app/usuario';
+import { UsuarioService } from 'src/app/usuario.service';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class AppComponent implements OnInit{
-  
-  public usuario!: Usuario; 
+export class HomeComponent{
+
+  public usuario: Usuario = this.usuarioService.getUsuarioLogado(); 
   public usuarios:Usuario[] = [];
   public editUsuario!: Usuario | null;
   public deleteUsuario!: Usuario | null;
 
-  constructor (private usuarioService: UsuarioService){}
-
-  ngOnInit(): void {
-    // this.getUsuarios();
-  }
-
+  constructor (private usuarioService: UsuarioService, private router: Router){}
+ 
   public getUsuarios():void{
     this.usuarioService.getUsuarios().subscribe(
       (response: Usuario[])=>{
@@ -36,34 +32,21 @@ export class AppComponent implements OnInit{
     );
   }
 
-  public validarUsuarios(key: string, nome: string): void {
+  public validarUsuarios(key: String, nome: String): void {
+    console.log(key);
     const results: Usuario[]=[];
     for(const usuario of this.usuarios){
       console.log(usuario.nome.toLowerCase())
-      if(usuario.nome.toLocaleLowerCase().indexOf(key.toLocaleLowerCase()) != -1){
+      if(usuario.nome ===nome && usuario.senha === key){
         results.push(usuario);
+        this.router.navigate(['/home']);
       }
     }
-    this.usuarios = results;
+    this.usuarioService.setUsuarioLogado(results[0]);
+
     if(results.length === 0 || !key) {
-      this.getUsuarios();
+      alert("Falho ao logar, senha ou usuario incorreto");
     }
-  }
-
-
-  public onAddUsuario(addForm: NgForm): void{
-    document.getElementById('add-pet-form')?.click();
-  
-    this.usuarioService.addUsuario(addForm.value).subscribe(
-      (response: Usuario) =>{
-        console.log(response);
-        this.getUsuarios();
-        addForm.reset();
-      },
-      (error: HttpErrorResponse) =>{
-        alert(error.message)
-      }
-    )
   }
 
   public onUpdateUsuario(usuario: Usuario): void{
@@ -71,7 +54,7 @@ export class AppComponent implements OnInit{
       this.usuarioService.updateUsuario(usuario).subscribe(
         (response: Usuario)=>{
           console.log(response);
-          this.getUsuarios();
+          this.validarUsuarios(usuario.nome, usuario.senha);
     
         },
         (error: HttpErrorResponse)=>{
@@ -84,7 +67,7 @@ export class AppComponent implements OnInit{
 
       this.usuarioService.deleteUsuario(usuarioId).subscribe(
         (response: void)=>{
-          this.getUsuarios();
+          this.router.navigate(['/login']);
         },
         (error:HttpErrorResponse)=>{
           alert(error.message)
@@ -99,7 +82,7 @@ export class AppComponent implements OnInit{
       button.style.display = 'none';
       button.setAttribute('data-toggle','modal');
       
-      button.setAttribute('data-target',`#${mode}PetModal`)
+      button.setAttribute('data-target',`#${mode}UsuarioModal`)
       
       if(mode === 'update'){
         this.editUsuario = usuario
@@ -113,5 +96,3 @@ export class AppComponent implements OnInit{
   
     }
 }
-
-

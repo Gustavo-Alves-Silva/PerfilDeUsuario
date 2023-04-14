@@ -1,0 +1,171 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<section style="background-color: #eee;">
+  <div class="container py-5" id="main-container">
+
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3">{{usuario.nome}}</h5>
+            <p class="text-muted mb-1">Idade: {{usuario.idade}}</p>
+            <p class="text-muted mb-4">{{usuario.estado}}, {{usuario.cidade}}</p>
+            <div class="d-flex justify-content-center mb-2">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Nome Completo</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{usuario.nome}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Idade</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">Idade: {{usuario.idade}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Estado/Cidade</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{usuario.estado}} - {{usuario.cidade}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Bairro/Endereco</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{usuario.bairro}} - {{usuario.locradouro}}, {{usuario.numero}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Biografia</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{usuario.biografia}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="float-right btn-group btn-group-sm">
+              <a (click)="onOpenModal(usuario, 'update')" class="btn btn-primary tooltips" data-placement="top" 
+              data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> Editar</a>
+              <a (click)="onOpenModal(usuario, 'delete')" class="btn btn-secondary tooltips" data-placement="top" 
+              data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i>Delete</a>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="modal fade" id="updateUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="usuarioEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="updateUsuarioModalLabel">Edit Usuario {{editUsuario?.nome}}</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <form #editForm="ngForm">
+              <div class="form-group">
+                 <label for="name">Nome</label>
+                 <input type="text" ngModel="{{editUsuario?.nome}}" name="nome" class="form-control" id="nome" aria-describedby="emailHelp" placeholder="ex: Gustavo Alves">
+              </div>
+              <input type="hidden" ngModel="{{editUsuario?.id}}" name="id" class="form-control" id="id" placeholder="">
+              <input type="hidden" ngModel="{{editUsuario?.usuarioCode}}" name="usuarioCode" class="form-control" id="usuarioCode" placeholder="">
+                  <div class="form-group">
+                      <label for="idade">Idade</label>
+                      <input type="number" ngModel="{{editUsuario?.idade}}" name="idade" class="form-control" id="idade" placeholder="ex: 19" required>
+                   </div>
+                   <div class="form-group">
+                      <label for="estado">Estado</label>
+                      <input type="text" ngModel="{{editUsuario?.estado}}" name="estado" class="form-control" id="estado" placeholder="ex: Bahia" required>
+                   </div>
+                   <div class="form-group">
+                       <label for="cidade">Cidade</label>
+                       <input type="text" ngModel="{{editUsuario?.cidade}}" name="cidade" class="form-control" id="cidade" placeholder="ex: João Pessoa" required>
+                    </div>            
+                    <div class="form-group">
+                       <label for="bairro">Bairro</label>
+                       <input type="text" ngModel="{{editUsuario?.bairro}}" name="bairro" class="form-control" id="bairro" placeholder="ex: Centro" required>
+                    </div>
+                    <div class="form-group">
+                       <label for="locradouro">Locradouro</label>
+                       <input type="text" ngModel="{{editUsuario?.locradouro}}" name="locradouro" class="form-control" id="locradouro" placeholder="ex: Avenida Brasil" required>
+                    </div>
+                    <div class="form-group">
+                       <label for="numero">Numero</label>
+                       <input type="number" ngModel="{{editUsuario?.numero}}" name="numero" class="form-control" id="numero" placeholder="ex: 123" required>
+                    </div>
+                    <div class="form-group">
+                       <label for="biografia">Biografia</label>
+                       <input type="text" ngModel="{{editUsuario?.biografia}}" name="biografia" class="form-control" id="biografia" placeholder="ex: EU sou pedro e tenho 18 anos..." required>
+                    </div>
+                    <div class="form-group">
+                       <label for="imageUrl">ImageUrl</label>
+                       <input type="text" ngModel="{{editUsuario?.imageUrl}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="ex: https://www.google.com/imgres?imgurl=312312" required>
+                    </div>
+                    <div class="form-group">
+                       <label for="senha">Senha</label>
+                       <input type="text" ngModel="{{editUsuario?.senha}}" name="senha" class="form-control" id="senha" placeholder="ex: 1234" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="phone">Image URL</label>
+                      <input type="text" ngModel name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL" required>
+                   </div>
+              <div class="modal-footer">
+                 <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                 <button (click)="onUpdateUsuario(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="deleteModelLabel">Delete Usuario</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <p>Are you sure you want to delete Usuario {{deleteUsuario?.nome}}?</p>
+           <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button (click)="onDeleteUsuario(deleteUsuario?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+           </div>
+        </div>
+     </div>
+  </div>
+</div>

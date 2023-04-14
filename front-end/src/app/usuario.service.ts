@@ -9,6 +9,17 @@ export class UsuarioService {
 
     private apiServerUrl = environment.apiBaseUrl;
 
+    private usuarioLogado!:Usuario;
+
+    public getUsuarioLogado(){
+      return this.usuarioLogado;
+    }
+
+    public setUsuarioLogado(usuario:Usuario){
+      this.usuarioLogado = usuario;
+
+    }
+
     constructor(private http: HttpClient){}
 
 
